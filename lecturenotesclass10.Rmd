@@ -2,8 +2,10 @@
 title: "Introduction to probability"
 author: "Clayton Baker"
 date: "2-22-21"
-output: html_document
-editor_options: 
+output:
+  pdf_document: default
+  html_document: default
+editor_options:
   chunk_output_type: console
 ---
 
@@ -27,9 +29,9 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE,
 
 ```{r packages}
 library(tidyverse)
-library(vcd) # used for Arthritis data
 library(usethis)
-
+use_git_config(user.name= "claybaker99", user.email="crb75@duke.edu")
+library(vcd) # used for Arthritis data
 ```
 
 ## Computing probabilities
