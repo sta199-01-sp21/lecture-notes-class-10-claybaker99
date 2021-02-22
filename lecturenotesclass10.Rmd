@@ -3,8 +3,8 @@ title: "Introduction to probability"
 author: "Clayton Baker"
 date: "2-22-21"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 editor_options:
   chunk_output_type: console
 ---
@@ -31,8 +31,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE,
 library(tidyverse)
 library(usethis)
 use_git_config(user.name= "claybaker99", user.email="crb75@duke.edu")
-# 
-install.packages("vcd")
+# install.packages("vcd")
 library(vcd) # used for Arthritis data
 ```
 
@@ -170,18 +169,37 @@ difference between dice roll 1 and dice roll 2 is equal to 4.
 
 Perform a simulation to compute this empirical probability.
 
-Write down your guess to the answer before you calculate it.
+Write down your guess to the answer before you calculate it. I think the difference, since only 1 pair of square and other is value. 
 
 ```{r simulate_rolls}
+dice <- c(1,2,3,4,5,6)
 
+two_roll_results <- tibble(
+  roll_1 = sample(dice, size = 100000, replace = TRUE),
+  roll_2 = sample(dice, size = 100000, replace = TRUE)
+)
+two_roll_results
+```
+
+```{r other approach}
+roll_results <- tibble(
+  die_1 = replicate(n=100000, expr = sample(1:6, size=1)),
+  die_2 = replicate(n=100000, expr = sample(1:6, size=1))
+)
+roll_results
 ```
 
 ```{r identify_events}
-
+roll_results <- roll_results %>% 
+  mutate(sq_match = (die_1)^2 == die_2) %>%
+  mutate(abs_diff = abs(die_1 - die_2)==4)
+roll_results
 ```
 
 ```{r summarize_rolls}
-
+roll_results %>% 
+  summarise(sq_match_prob = mean(sq_match),
+            abs_diff_prob = mean(abs_diff))
 ```
 
 ## Additional Resources-please look at before Weds.
